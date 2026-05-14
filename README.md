@@ -131,8 +131,8 @@ Open the training notebook in Colab and follow the cell-by-cell instructions:
 | File | Size | Description | Download |
 |------|------|-------------|----------|
 | `google_gemma-4-E2B-it-Q4_K_M.gguf` | ~1.8 GB | Base model (Gemma 4 E2B quantized) | [HuggingFace](https://huggingface.co/bartowski/google_gemma-4-E2B-it-GGUF) |
-| `voces_sierra_lora_v2.gguf` | 23 MB | Fine-tuned LoRA adapter | [Google Drive](#) |
-| `adapter_model.safetensors` | 57 MB | HuggingFace/PEFT format (for retraining) | [Google Drive](#) |
+| `voces_sierra_lora_v2.gguf` | 23 MB | Fine-tuned LoRA adapter | [Google Drive](https://drive.google.com/file/d/1OZmlRNr12vuHwJ8uLVuBV_3-PnkTlcGr/view?usp=sharing) |
+| `adapter_model.safetensors` | 57 MB | HuggingFace/PEFT format (for retraining) | [Google Drive](https://drive.google.com/file/d/1eMsXtk6TdQW2j0FQxqqAwf_1z61iSQ-o/view?usp=sharing) |
 
 ---
 
