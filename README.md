@@ -1,8 +1,8 @@
-# voces-de-la-sierra
 <p align="center">
   <h1 align="center">🏔️ Voces de la Sierra</h1>
   <p align="center"><strong>Bridging Languages, Preserving Cultures</strong></p>
   <p align="center">An offline bidirectional translator & cultural teacher for Spanish ↔ Náhuatl</p>
+  <p align="center">Powered by Gemma 4 E2B · Fine-tuned with Unsloth · Deployed with llama.cpp</p>
   <p align="center">
     <a href="https://www.kaggle.com/competitions/gemma-4-good-hackathon">Gemma 4 Good Hackathon</a> · Kaggle × Google DeepMind · May 2026
   </p>
@@ -87,42 +87,28 @@ The system detects user intent automatically: translation requests get concise a
 
 ### Option A: One-Click Windows (recommended for demo)
 
-1. Download the required files (see [Models](#-models) section below)
-2. Place them in a folder together
-3. Double-click **`run_server.bat`**
-4. Open **http://localhost:8080** in your browser
-5. Start translating!
+1. Download [llama.cpp release](https://github.com/ggml-org/llama.cpp/releases) for Windows (CPU version)
+2. Download the [base model GGUF](https://huggingface.co/bartowski/google_gemma-4-E2B-it-GGUF) (~1.8GB)
+3. Download the [LoRA adapter](https://drive.google.com/file/d/1OZmlRNr12vuHwJ8uLVuBV_3-PnkTlcGr/view?usp=sharing) (23MB)
+4. Place all files in the same folder with `run_server.bat`
+5. Double-click **`run_server.bat`**
+6. Open **http://localhost:8080** in your browser
+7. Start translating!
 
 ### Option B: Command Line
 
 ```bash
-# Download llama.cpp release for your OS from:
-# https://github.com/ggml-org/llama.cpp/releases
-
-# Run the server
 llama-server -m google_gemma-4-E2B-it-Q4_K_M.gguf \
   --lora voces_sierra_lora_v2.gguf \
   --chat-template gemma \
   --port 8080
-
-# Open http://localhost:8080
 ```
 
-### Option C: Direct CLI chat
-
-```bash
-llama-cli -m google_gemma-4-E2B-it-Q4_K_M.gguf \
-  --lora voces_sierra_lora_v2.gguf \
-  --chat-template gemma \
-  -sys "Eres Voces de la Sierra, un asistente bilingue experto en espanol y nahuatl." \
-  -cnv -n 200
-```
-
-### Option D: Reproduce Training (Google Colab)
+### Option C: Reproduce Training (Google Colab)
 
 Open the training notebook in Colab and follow the cell-by-cell instructions:
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](notebooks/training.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](notebooks/Voces_de_la_Sierra_Training.ipynb)
 
 ---
 
@@ -131,61 +117,28 @@ Open the training notebook in Colab and follow the cell-by-cell instructions:
 | File | Size | Description | Download |
 |------|------|-------------|----------|
 | `google_gemma-4-E2B-it-Q4_K_M.gguf` | ~1.8 GB | Base model (Gemma 4 E2B quantized) | [HuggingFace](https://huggingface.co/bartowski/google_gemma-4-E2B-it-GGUF) |
-| `voces_sierra_lora_v2.gguf` | 23 MB | Fine-tuned LoRA adapter | [Google Drive](https://drive.google.com/file/d/1OZmlRNr12vuHwJ8uLVuBV_3-PnkTlcGr/view?usp=sharing) |
-| `adapter_model.safetensors` | 57 MB | HuggingFace/PEFT format (for retraining) | [Google Drive](https://drive.google.com/file/d/1eMsXtk6TdQW2j0FQxqqAwf_1z61iSQ-o/view?usp=sharing) |
-
----
-
-## 📁 Repository Structure
-
-```
-voces-de-la-sierra/
-├── README.md                    # This file
-├── LICENSE                      # Apache 2.0
-├── run_server.bat               # One-click launcher for Windows
-├── Modelfile                    # Ollama configuration (future)
-│
-├── notebooks/
-│   └── training.ipynb           # Complete training notebook (Colab)
-│
-├── data/
-│   └── dataset_info.md          # Dataset sources and preprocessing details
-│
-├── models/
-│   └── download_guide.md        # How to download model files
-│
-├── deployment/
-│   ├── run_server.bat           # Windows launcher
-│   ├── run_server.sh            # Linux/Mac launcher
-│   └── Modelfile                # Ollama config
-│
-├── docs/
-│   ├── writeup.pdf              # Full technical write-up
-│   └── architecture.png         # Architecture diagram
-│
-└── demo/
-    └── video_link.md            # Link to demo video
-```
+| `voces_sierra_lora_v2.gguf` | 23 MB | Fine-tuned LoRA adapter (GGUF) | [Google Drive](https://drive.google.com/file/d/1OZmlRNr12vuHwJ8uLVuBV_3-PnkTlcGr/view?usp=sharing) |
+| `adapter_model.safetensors` | 57 MB | LoRA adapter (PEFT format, for retraining) | [Google Drive](https://drive.google.com/file/d/1eMsXtk6TdQW2j0FQxqqAwf_1z61iSQ-o/view?usp=sharing) |
 
 ---
 
 ## 📊 Training Results
 
-The model was trained for 10,000 steps on Google Colab's free T4 GPU using our checkpoint persistence system that saves progress to Google Drive every 500 steps, allowing training to resume across multiple 5-hour sessions.
+Trained for 10,000 steps on Google Colab's free T4 GPU with a checkpoint persistence system that saves to Google Drive every 500 steps, enabling multi-session training across 5-hour limits.
 
 ### Loss Curve
 
 | Phase | Steps | Loss | Status |
 |-------|-------|------|--------|
 | Start | 0 | 1.14 | Baseline |
-| Warm-up | 0-100 | 1.14 → 0.77 | Rapid learning |
-| Convergence | 100-5,000 | 0.77 → 0.25 | Core translation patterns |
-| Refinement | 5,000-10,000 | 0.25 → 0.14 | Fine-grained morphology |
+| Warm-up | 0–100 | 1.14 → 0.77 | Rapid initial learning |
+| Convergence | 100–5,000 | 0.77 → 0.25 | Core translation patterns acquired |
+| Refinement | 5,000–10,000 | 0.25 → 0.14 | Fine-grained morphology |
 
 ### Verified Translations (Colab GPU Inference)
 
-| Input | Output | Verified |
-|-------|--------|----------|
+| Input | Output | Verification |
+|-------|--------|--------------|
 | "Traduce al náhuatl: el agua es vida" | `in atl in tlacatl` | ✅ "atl" = water in Náhuatl |
 | "Traduce al español: Auh in ye yuhqui" | `Y en verdad` | ✅ Correct partial translation |
 
@@ -201,11 +154,11 @@ The model was trained for 10,000 steps on Google Colab's free T4 GPU using our c
 
 ### Why Offline Matters
 
-In Mexico's Sierra Norte, Sierra de Oaxaca, and Huasteca regions, internet connectivity ranges from unreliable to nonexistent. A cloud-based translator is useless where there is no cloud. Voces de la Sierra runs entirely on-device — **no API calls, no server dependencies, no data leaving the user's hands**.
+In Mexico's Sierra Norte, Sierra de Oaxaca, and Huasteca regions, internet connectivity ranges from unreliable to nonexistent. A cloud-based translator is useless where there is no cloud. Voces de la Sierra runs entirely on-device — **no API calls, no server dependencies, no data leaving the user's hands**. This also addresses a critical privacy concern: indigenous communities have historically had their linguistic data extracted without consent.
 
 ### Scalability
 
-The pipeline is **language-agnostic**. The same process (parallel corpus → bidirectional formatting → LoRA fine-tuning → GGUF export) applies to any endangered language pair. Mexico alone has **68 indigenous language groups with 364 variants**. Globally, UNESCO estimates **40% of ~6,700 languages are endangered**. Each one is a unique philosophy of existence.
+The pipeline is **language-agnostic**. The same process (parallel corpus → bidirectional formatting → LoRA fine-tuning → GGUF export) applies to any endangered language pair. Mexico alone has **68 indigenous language groups with 364 variants**. Globally, UNESCO estimates **40% of ~6,700 languages are endangered**.
 
 ---
 
@@ -214,20 +167,41 @@ The pipeline is **language-agnostic**. The same process (parallel corpus → bid
 | Challenge | Solution |
 |-----------|----------|
 | Gemma 4 E2B OOM on T4 GPU | Unsloth official T4 config: max_seq=1024, r=8, dropout=0 |
-| 5-hour Colab session limit | Checkpoint persistence system via Google Drive (resume across sessions) |
-| GGUF export fails with bitsandbytes | Custom pipeline: extract text-only LoRA → rename tensors → convert via 16-bit base |
+| 5-hour Colab session limit | Checkpoint persistence system via Google Drive |
+| GGUF export fails with bitsandbytes | Custom pipeline: text-only LoRA extraction → tensor renaming → 16-bit base conversion |
 | Náhuatl dialectal variation in dataset | Morphological regex validator filtering non-Náhuatl entries |
 | Gemma 4 multimodal tokenizer mismatch | Manual chat template construction with verified token strings |
-| Unsloth mlx compilation bug | Disabled torch dynamo compiler via environment variables |
+| Unsloth MLX compilation bug on GPU | Disabled torch dynamo compiler via environment variables |
 
 ---
 
 ## 🔮 Future Roadmap
 
-1. **Voice Input** — Gemma 4 E2B supports audio natively. When llama.cpp adds audio support, users can speak Náhuatl directly.
+1. **Voice Input** — Gemma 4 E2B supports audio natively via USM encoder. When llama.cpp adds audio support, users can speak Náhuatl directly.
 2. **Android APK** — Standalone app using llama.cpp Android bindings for direct phone installation.
 3. **Expanded Datasets** — Partner with INALI and CIESAS for larger, dialect-labeled corpora.
-4. **Multi-language** — Apply the same pipeline to Mixtec, Zapotec, Maya, and other endangered languages.
+4. **Multi-language** — Apply the same pipeline to Mixtec, Zapotec, Maya, and other endangered Mexican indigenous languages.
+
+---
+
+## 📁 Repository Structure
+
+```
+voces-de-la-sierra/
+├── README.md                              # This file
+├── LICENSE                                # Apache 2.0
+├── run_server.bat                         # One-click Windows launcher
+├── Modelfile                              # Ollama configuration
+│
+├── notebooks/
+│   └── Voces_de_la_Sierra_Training.ipynb  # Complete training notebook
+│
+├── docs/
+│   └── Voces_de_la_Sierra_Writeup.pdf     # Full technical write-up
+│
+└── demo/
+    └── video_link.md                      # Link to demo video
+```
 
 ---
 
@@ -235,7 +209,7 @@ The pipeline is **language-agnostic**. The same process (parallel corpus → bid
 
 This project is licensed under the **Apache License 2.0** — see [LICENSE](LICENSE) for details.
 
-Compatible with the Gemma 4 model license for open-weight distribution and commercial use.
+**Gemma is a trademark of Google LLC.** This project uses the Gemma 4 E2B model under Google's Gemma Terms of Use. The fine-tuned adapter weights are distributed under Apache 2.0.
 
 ---
 
@@ -243,7 +217,7 @@ Compatible with the Gemma 4 model license for open-weight distribution and comme
 
 - **Google DeepMind** — Gemma 4 open models
 - **Unsloth** — Efficient fine-tuning framework
-- **SomosNLP** — Axolotl Spanish-Náhuatl dataset
+- **SomosNLP** — Axolotl Spanish-Náhuatl parallel dataset
 - **ggml-org** — llama.cpp inference engine
 - **The Náhuatl-speaking communities of Mexico** — whose voices deserve to be heard
 
@@ -261,4 +235,6 @@ Digital Transformation Consultant & AI/App Development Specialist
 
 <p align="center">
   Built with ❤️ for the <a href="https://www.kaggle.com/competitions/gemma-4-good-hackathon">Gemma 4 Good Hackathon</a> · Kaggle × Google DeepMind · 2026
+  <br>
+  <em>Gemma is a trademark of Google LLC.</em>
 </p>
