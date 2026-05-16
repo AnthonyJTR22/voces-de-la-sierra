@@ -88,7 +88,7 @@ llama-server -m google_gemma-4-E2B-it-Q4_K_M.gguf --lora voces_sierra_lora_v2.gg
 
 ### Option C: Reproduce Training in Google Colab
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/18bfAb1piftFa2cS3eLmpgWO2jycBc6C3)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/18bfAb1piftFa2cS3eLmpgWO2jycBc6C3?usp=sharing)
 
 ---
 
