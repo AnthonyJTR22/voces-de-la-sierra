@@ -174,6 +174,8 @@ The pipeline is language-agnostic. Mexico alone has 68 indigenous language group
 ---
 
 ## Repository Structure
+
+```
 voces-de-la-sierra/
 ├── README.md
 ├── LICENSE
@@ -186,7 +188,8 @@ voces-de-la-sierra/
 ├── docs/
 │   └── Voces_de_la_Sierra_Writeup.pdf
 └── demo/
-└── video_link.md
+    └── video_link.md
+```
 
 ---
 
