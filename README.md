@@ -43,18 +43,24 @@ The system detects user intent automatically: translation requests get concise a
 
 ## Architecture
 
+```
 TRAINING (Cloud)
-Axolotl Dataset --> Quality Filter --> Bidirectional Formatting
-(20,028 pairs)      (Nahuatl morph)    (67,288 examples)
-Gemma 4 E2B-it --> QLoRA (r=8) --> 10,000 steps --> LoRA adapter
-(4-bit, Unsloth)   (0.29% params)   (Colab T4 free)
-DEPLOYMENT (Edge)
-Gemma 4 E2B  +  LoRA Adapter  -->  llama-server (localhost:8080)
-(Q4_K_M 1.8GB)   (GGUF 23MB)
-[x] No internet required      [x] No cloud dependency
-[x] No data leaves the device [x] Under 2GB total storage
-[x] Works on any PC/laptop    [x] Full user privacy
 
+  Axolotl Dataset --> Quality Filter --> Bidirectional Formatting
+  (20,028 pairs)      (Nahuatl morph)    (67,288 examples)
+
+  Gemma 4 E2B-it --> QLoRA (r=8) --> 10,000 steps --> LoRA adapter
+  (4-bit, Unsloth)   (0.29% params)   (Colab T4 free)
+
+DEPLOYMENT (Edge)
+
+  Gemma 4 E2B  +  LoRA Adapter  -->  llama-server (localhost:8080)
+  (Q4_K_M 1.8GB)   (GGUF 23MB)
+
+  [x] No internet required      [x] No cloud dependency
+  [x] No data leaves the device [x] Under 2GB total storage
+  [x] Works on any PC/laptop    [x] Full user privacy
+```
 ---
 
 ## Technical Specifications
