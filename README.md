@@ -123,3 +123,53 @@ The pipeline is **language-agnostic**. Mexico alone has **68 indigenous language
 ---
 
 ## 📁 Repository Structure
+
+voces-de-la-sierra/
+├── README.md
+├── LICENSE                                # Apache 2.0
+├── run_server.bat                         # One-click Windows launcher
+├── Modelfile                              # Ollama configuration
+├── assets/
+│   └── loss_curve.png                     # Training loss visualization
+├── notebooks/
+│   └── Voces_de_la_Sierra_Training.ipynb  # Complete training notebook
+├── docs/
+│   └── Voces_de_la_Sierra_Writeup.pdf     # Full technical write-up
+└── demo/
+└── video_link.md                      # Demo video link
+
+---
+
+## 📄 License
+
+This project is licensed under the **Apache License 2.0** — see [LICENSE](LICENSE) for details.
+
+**Gemma is a trademark of Google LLC.** This project uses the Gemma 4 E2B model under Google's Gemma Terms of Use. The fine-tuned adapter weights are distributed under Apache 2.0.
+
+---
+
+## 🙏 Acknowledgments
+
+- **Google DeepMind** — Gemma 4 open models
+- **Unsloth** — Efficient fine-tuning framework
+- **SomosNLP** — Axolotl Spanish-Náhuatl parallel dataset
+- **ggml-org** — llama.cpp inference engine
+- **The Náhuatl-speaking communities of Mexico** — whose voices deserve to be heard
+
+---
+
+## 👤 Author
+
+**Anthony Jair Torres Rosas**
+
+Digital Transformation Consultant & AI/App Development Specialist
+
+*"The most powerful AI in the world should work for the people who have the least."*
+
+---
+
+<p align="center">
+  Built with ❤️ for the <a href="https://www.kaggle.com/competitions/gemma-4-good-hackathon">Gemma 4 Good Hackathon</a> · Kaggle × Google DeepMind · 2026
+  <br>
+  <em>Gemma is a trademark of Google LLC.</em>
+</p>
